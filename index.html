@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a1628" />
+  <meta name="description" content="Zikra – Premium Ramadan Digital Tasbih, Dhikr & Hadith App" />
+  <title>Zikra – ذكرا | Digital Tasbih & Dhikr</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌙</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel+Decorative:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="dark-mode">
+
+  <!-- Animated Background -->
+  <div class="bg-overlay"></div>
+  <canvas id="starCanvas"></canvas>
+  <div class="lantern-container">
+    <div class="lantern lantern-1">🏮</div>
+    <div class="lantern lantern-2">🏮</div>
+    <div class="lantern lantern-3">🏮</div>
+  </div>
+
+  <!-- Completion Overlay -->
+  <div class="completion-overlay" id="completionOverlay">
+    <div class="completion-content">
+      <div class="completion-moon">🌙</div>
+      <h2>SubhanAllah!</h2>
+      <p>Target Completed</p>
+      <button onclick="document.getElementById('completionOverlay').classList.remove('active')">Continue</button>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <a href="https://x.com/AmmarBinYasir_1" target="_blank" rel="noopener" class="logo-link">
+      <span class="logo-text">Zikra <span class="logo-arabic">ذكرا</span></span>
+    </a>
+    <div class="header-controls">
+      <button class="icon-btn" id="soundToggle" title="Toggle Sound">🔇</button>
+      <button class="icon-btn" id="themeToggle" title="Toggle Theme">☀️</button>
+      <button class="icon-btn" id="ramadanToggle" title="Ramadan Mode">🌙</button>
+    </div>
+  </header>
+
+  <!-- Greeting Banner -->
+  <div class="greeting-banner" id="greetingBanner">
+    <span id="greetingText">Assalamu Alaikum, Believer 🌙</span>
+    <button class="small-btn" id="editNameBtn">Edit Name</button>
+  </div>
+
+  <!-- Name Modal -->
+  <div class="modal-overlay" id="nameModal">
+    <div class="modal-card">
+      <h3>Enter Your Name</h3>
+      <input type="text" id="nameInput" placeholder="Your Name..." maxlength="30" />
+      <button class="btn-gold" onclick="saveName()">Save</button>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="main-nav">
+    <button class="nav-btn active" data-page="tasbih">📿 Tasbih</button>
+    <button class="nav-btn" data-page="counter">🔢 Counter</button>
+    <button class="nav-btn" data-page="hadith">📖 Hadith</button>
+    <button class="nav-btn" data-page="tracker">📅 Tracker</button>
+    <button class="nav-btn" data-page="ramadan">🕌 Ramadan</button>
+    <button class="nav-btn" data-page="names">✨ 99 Names</button>
+  </nav>
+
+  <!-- Pages -->
+  <main class="main-content">
+
+    <!-- ========== TASBIH PAGE ========== -->
+    <section class="page active" id="page-tasbih">
+      <div class="page-header">
+        <h1 class="page-title">📿 Tasbih Collection</h1>
+        <p class="page-subtitle">Click any card to start counting</p>
+      </div>
+
+      <!-- Motivational Quote Slider -->
+      <div class="quote-slider">
+        <div class="quote-slide active" id="quoteSlide">
+          <p>"Indeed, in the remembrance of Allah do hearts find rest." — Quran 13:28</p>
+        </div>
+      </div>
+
+      <div class="tasbih-grid" id="tasbihGrid">
+        <!-- Cards rendered by JS -->
+      </div>
+
+      <!-- Ayat ul Kursi -->
+      <div class="special-card" id="ayatCard">
+        <div class="special-badge">Special</div>
+        <h3 class="special-title">آية الكرسي – Ayat-ul-Kursi</h3>
+        <p class="arabic-text ayat-arabic">اللَّهُ لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَنْ ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ</p>
+        <p class="translation-text">Allah – there is no deity except Him, the Ever-Living, the Sustainer of existence... (Quran 2:255)</p>
+        <div class="special-benefit">Reciting after every prayer protects until the next prayer. Reciting before sleep places you under divine protection.</div>
+        <button class="btn-gold mt-1" id="startAyatBtn">Start Counter</button>
+      </div>
+
+      <!-- Durood Sharif – Complete -->
+      <div class="special-card durood-card">
+        <div class="special-badge">Special</div>
+        <h3 class="special-title">درود إبراهيم – Durood Ibrahim (Complete)</h3>
+
+        <div class="durood-section">
+          <div class="durood-label">Part 1 – Sending Blessings (Salawat)</div>
+          <p class="arabic-text">
+            اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ،
+            كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ،
+            إِنَّكَ حَمِيدٌ مَجِيدٌ
+          </p>
+          <p class="transliteration">
+            Allāhumma ṣalli ʿalā Muḥammadin wa ʿalā āli Muḥammadin,
+            kamā ṣallayta ʿalā Ibrāhīma wa ʿalā āli Ibrāhīm,
+            innaka Ḥamīdun Majīd
+          </p>
+          <p class="translation-text">
+            O Allah, send blessings upon Muhammad and upon the family of Muhammad,
+            just as You sent blessings upon Ibrahim and upon the family of Ibrahim.
+            Indeed, You are Praiseworthy and Glorious.
+          </p>
+        </div>
+
+        <div class="durood-divider">❋</div>
+
+        <div class="durood-section">
+          <div class="durood-label">Part 2 – Sending Peace &amp; Blessings (Barakah)</div>
+          <p class="arabic-text">
+            اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ،
+            كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ،
+            إِنَّكَ حَمِيدٌ مَجِيدٌ
+          </p>
+          <p class="transliteration">
+            Allāhumma bārik ʿalā Muḥammadin wa ʿalā āli Muḥammadin,
+            kamā bārakta ʿalā Ibrāhīma wa ʿalā āli Ibrāhīm,
+            innaka Ḥamīdun Majīd
+          </p>
+          <p class="translation-text">
+            O Allah, send Your blessings upon Muhammad and upon the family of Muhammad,
+            just as You sent Your blessings upon Ibrahim and upon the family of Ibrahim.
+            Indeed, You are Praiseworthy and Glorious.
+          </p>
+        </div>
+
+        <div class="durood-source">
+          📚 Source: Sahih Al-Bukhari (Book 60, Hadith 10) &amp; Sahih Muslim (Book 4, Hadith 903)
+          — Recited in the final sitting (Tashahhud) of every Salah
+        </div>
+        <div class="special-benefit">
+          Whoever sends one Salawat upon the Prophet ﷺ, Allah will send ten blessings upon him, erase ten of his sins, and raise him ten degrees. (Muslim)
+          This is the complete Durood Ibrahim as taught by the Prophet ﷺ himself when his companions asked how to send blessings upon him.
+        </div>
+        <button class="btn-gold mt-1" id="startDuroodBtn">Start Counter</button>
+      </div>
+
+      <!-- Custom Tasbih -->
+      <div class="special-card custom-tasbih-card">
+        <div class="special-badge">Custom</div>
+        <h3 class="special-title">✏️ Custom Tasbih</h3>
+        <p class="translation-text">Add your own personal Dhikr phrase.</p>
+        <input type="text" id="customArabic" placeholder="Arabic text (optional)" class="custom-input" dir="rtl" />
+        <input type="text" id="customName" placeholder="Name / Transliteration" class="custom-input" />
+        <input type="number" id="customTarget" placeholder="Target count (e.g. 33)" class="custom-input" min="1" />
+        <button class="btn-gold mt-1" onclick="addCustomTasbih()">Add & Start</button>
+      </div>
+    </section>
+
+    <!-- ========== COUNTER PAGE ========== -->
+    <section class="page" id="page-counter">
+      <div class="page-header">
+        <h1 class="page-title">🔢 Digital Counter</h1>
+        <p class="page-subtitle" id="counterSubtitle">Select a Tasbih from the Tasbih page</p>
+      </div>
+
+      <div class="counter-card">
+        <div class="counter-arabic" id="counterArabic">—</div>
+        <div class="counter-name" id="counterName">Select a Dhikr</div>
+
+        <div class="bead-ring" id="beadRing">
+          <!-- Beads rendered by JS -->
+        </div>
+
+        <div class="count-display" id="countDisplay">0</div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar" id="progressBar" style="width:0%"></div>
+        </div>
+        <div class="progress-label" id="progressLabel">0 / 33</div>
+
+        <button class="tap-btn" id="tapBtn" onclick="increment()">
+          <span class="tap-icon">📿</span>
+          <span class="tap-label">TAP</span>
+        </button>
+
+        <div class="counter-controls">
+          <button class="ctrl-btn" onclick="undo()">↩ Undo</button>
+          <button class="ctrl-btn danger" onclick="resetCounter()">↺ Reset</button>
+        </div>
+
+        <div class="target-selector">
+          <label>Set Target:</label>
+          <div class="target-btns">
+            <button class="tgt-btn" onclick="setTarget(33)">33</button>
+            <button class="tgt-btn" onclick="setTarget(100)">100</button>
+            <button class="tgt-btn" onclick="setTarget(1000)">1000</button>
+            <input type="number" id="customTargetInput" placeholder="Custom" min="1" class="tgt-input" />
+            <button class="tgt-btn" onclick="setCustomTarget()">Set</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="session-stats">
+        <div class="stat-box"><div class="stat-num" id="sessionTotal">0</div><div class="stat-label">Session</div></div>
+        <div class="stat-box"><div class="stat-num" id="todayTotal">0</div><div class="stat-label">Today</div></div>
+        <div class="stat-box"><div class="stat-num" id="streakDays">0</div><div class="stat-label">Streak 🔥</div></div>
+      </div>
+    </section>
+
+    <!-- ========== HADITH PAGE ========== -->
+    <section class="page" id="page-hadith">
+      <div class="page-header">
+        <h1 class="page-title">📖 Authentic Hadith</h1>
+        <p class="page-subtitle">Verified from Sahih collections</p>
+      </div>
+
+      <div class="hadith-card" id="hadithCard">
+        <div class="hadith-source-badge" id="hadithSource">Sahih Bukhari</div>
+        <p class="hadith-arabic" id="hadithArabic"></p>
+        <p class="hadith-english" id="hadithEnglish"></p>
+        <p class="hadith-ref" id="hadithRef"></p>
+
+        <div class="hadith-actions">
+          <button class="action-btn" onclick="nextHadith()">Next Hadith →</button>
+          <button class="action-btn" onclick="copyHadith()">📋 Copy</button>
+          <button class="action-btn" onclick="shareHadith()">🔗 Share</button>
+        </div>
+      </div>
+
+      <div class="hadith-nav">
+        <button class="btn-gold" onclick="prevHadith()">← Previous</button>
+        <span id="hadithCounter" class="hadith-counter-display">1 / 30</span>
+        <button class="btn-gold" onclick="nextHadith()">Next →</button>
+      </div>
+    </section>
+
+    <!-- ========== TRACKER PAGE ========== -->
+    <section class="page" id="page-tracker">
+      <div class="page-header">
+        <h1 class="page-title">📅 Daily Tracker</h1>
+        <p class="page-subtitle">Build your Dhikr habit</p>
+      </div>
+
+      <div class="tracker-overview">
+        <div class="tracker-stat big"><div class="stat-num" id="tToday">0</div><div class="stat-label">Today's Count</div></div>
+        <div class="tracker-stat big"><div class="stat-num" id="tStreak">0</div><div class="stat-label">Day Streak 🔥</div></div>
+        <div class="tracker-stat big"><div class="stat-num" id="tWeek">0</div><div class="stat-label">This Week</div></div>
+        <div class="tracker-stat big"><div class="stat-num" id="tMonth">0</div><div class="stat-label">This Month</div></div>
+        <div class="tracker-stat big"><div class="stat-num" id="tAll">0</div><div class="stat-label">All Time</div></div>
+      </div>
+
+      <!-- Chart -->
+      <div class="chart-card">
+        <h3>Weekly Progress</h3>
+        <div class="bar-chart" id="weekChart"></div>
+      </div>
+
+      <!-- Calendar -->
+      <div class="calendar-card">
+        <h3>Monthly Calendar</h3>
+        <div id="calendarGrid" class="calendar-grid"></div>
+      </div>
+
+      <!-- History Log -->
+      <div class="history-card">
+        <h3>History Log</h3>
+        <div id="historyLog" class="history-log"></div>
+        <button class="btn-gold mt-1" onclick="exportProgress()">📤 Export Progress</button>
+        <button class="ctrl-btn danger mt-1" onclick="clearHistory()">🗑 Clear History</button>
+      </div>
+    </section>
+
+    <!-- ========== RAMADAN PAGE ========== -->
+    <section class="page" id="page-ramadan">
+      <div class="page-header">
+        <h1 class="page-title">🕌 Ramadan Special</h1>
+        <p class="page-subtitle">Blessed Month Features</p>
+      </div>
+
+      <!-- Countdown -->
+      <div class="ramadan-countdown-card">
+        <div class="countdown-moon">🌙</div>
+        <h2 id="ramadanStatusText">Ramadan Countdown</h2>
+        <div class="countdown-grid" id="countdownGrid">
+          <div class="cd-box"><div class="cd-num" id="cd-days">--</div><div class="cd-label">Days</div></div>
+          <div class="cd-box"><div class="cd-num" id="cd-hours">--</div><div class="cd-label">Hours</div></div>
+          <div class="cd-box"><div class="cd-num" id="cd-mins">--</div><div class="cd-label">Mins</div></div>
+          <div class="cd-box"><div class="cd-num" id="cd-secs">--</div><div class="cd-label">Secs</div></div>
+        </div>
+        <p class="ramadan-note" id="ramadanNote">Based on expected Ramadan 2025 start</p>
+      </div>
+
+      <!-- Laylatul Qadr -->
+      <div class="laylat-card">
+        <div class="laylat-icon">⭐</div>
+        <h3>Laylatul Qadr Reminder</h3>
+        <p>Seek Laylatul Qadr in the <strong>odd nights of the last 10 nights</strong> of Ramadan: 21st, 23rd, 25th, 27th, 29th.</p>
+        <p class="arabic-text small-arabic">إِنَّا أَنزَلْنَاهُ فِي لَيْلَةِ الْقَدْرِ</p>
+        <p class="translation-text">"Indeed, We sent it down during the Night of Decree." (Quran 97:1)</p>
+        <div class="dua-box">
+          <p><strong>Dua for Laylatul Qadr:</strong></p>
+          <p class="arabic-text">اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي</p>
+          <p><em>Allahumma innaka 'afuwwun tuhibbul 'afwa fa'fu 'anni</em></p>
+          <p>O Allah, You are All-Pardoning, You love to pardon, so pardon me.</p>
+        </div>
+      </div>
+
+      <!-- Taraweeh Tracker -->
+      <div class="taraweeh-card">
+        <h3>🌙 Taraweeh Tracker</h3>
+        <p>Track your Taraweeh prayers this Ramadan</p>
+        <div class="taraweeh-grid" id="taraweehGrid"></div>
+        <button class="btn-gold mt-1" onclick="resetTaraweeh()">Reset</button>
+      </div>
+
+      <!-- Ramadan Dhikr -->
+      <div class="ramadan-dhikr-card">
+        <h3>✨ Recommended Ramadan Dhikr</h3>
+        <div class="ramadan-dhikr-list" id="ramadanDhikrList"></div>
+      </div>
+    </section>
+
+    <!-- ========== 99 NAMES PAGE ========== -->
+    <section class="page" id="page-names">
+      <div class="page-header">
+        <h1 class="page-title">✨ 99 Names of Allah</h1>
+        <p class="page-subtitle">أسماء الله الحسنى – Al-Asma ul-Husna</p>
+      </div>
+      <div class="names-search">
+        <input type="text" id="namesSearch" placeholder="Search names or meanings..." oninput="filterNames()" class="search-input" />
+      </div>
+      <div class="names-grid" id="namesGrid"></div>
+    </section>
+
+  </main>
+
+  <!-- Audio (silent click) -->
+  <audio id="clickSound" preload="auto">
+    <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbwpZjQUVVe5ykpYtpTUpNXnyVoJuIdlpmcY6dp5mBZlFNVHCMnqKXfmJMRVBtkJ+llX5qUEtZdJKjp5mBaFJWWYCVoqWYgm9XUVZ3kKCjmIl7YVdccIyepY16Z1teapCepYx5Z2FjaJCdpItxX2FpbpOcpIt0YmVudZOapoZ1ZGl2eZaapYV0ZGx5fZmbpoR3aHF7h5uck31tZ295f5mXqIJza3R6h5eckHdtZ3N+i56PfHBqdHmIop2BbWt2e42fnXlsam51j6Kbgm9ud4STm5d9cXN8i5mTlYN6coOPl5KWg3p5ipeQjoZ+fHuKk4iNhn5+gpCRhIaFf32BkIaLioV+e4mJh4iIhn17i4aIiImFfHuNhIiIiIN9e42Dh4eHhH17jYKHhoSDfnyOgYaEgoN9e4+AhYOBgn18kH+FgoGCfnyQfoSBgIJ+fZB9hH9/gX99j36EfX+Bf36Pf4R8fn9/fo9/g3x+f39+j4CDfH5/f36PgIN9f39+f46Ag35/gH5/joGDfH+Afn6OgIN8f4B+fo6AhH1+gH5/joGDfH+Afn+OgIN8f4B+f46AhH1+gH9/j4GDfH+Afn+OgYN8gH9+f46AhH5+gH5/joGDfH+Afn+OgIN8gH9+f46AhH5+gH5/joGDfH+Afn+OgIN8gH9+f46AhH5+gH5/joGDfH+Afn+OgIN8gH9+f46AhH5+gH5/joGDfH+Afn+OgIN8gH9+f46AhH5+gH5/joGDfH+Afn+OgIN8gH9+f46AhH5+gH5/joGDfH+Afn+OgIN8gH9+f46AhH5+gH5/joGDfH+Afn+OgIN8gH9+f46AhH5+gH5/joGDfH+Afn+OgIN8gH9+f46AhH5+gH5/joGDfH+Afn8=" type="audio/wav" />
+  </audio>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <p>Made with ❤️ by Ammar Bin Yasir</p>
+      <div class="footer-links">
+        <a href="https://x.com/AmmarBinYasir_1" target="_blank" rel="noopener" class="footer-link">
+          <span class="footer-icon">𝕏</span> AmmarBinYasir_1
+        </a>
+        <a href="https://github.com/AmmarBinYasir-1" target="_blank" rel="noopener" class="footer-link">
+          <svg class="gh-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+          AmmarBinYasir-1
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
